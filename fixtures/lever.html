@@ -1,0 +1,92 @@
+<!doctype html>
+<!-- Synthetic fixture modeled on Lever's posting + apply page markup (jobs.lever.co/<company>/<id>/apply). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Northstar Freight - Senior Backend Engineer</title>
+  </head>
+  <body>
+    <div class="main-header page-full-width section-wrapper">
+      <div class="main-header-content page-centered narrow-section">
+        <a class="main-header-logo" href="https://jobs.lever.co/northstar"><img alt="Northstar Freight logo" src="data:," /></a>
+      </div>
+    </div>
+    <div class="content-wrapper posting-page">
+      <div class="content">
+        <div class="section-wrapper accent-section page-full-width">
+          <div class="section page-centered posting-header">
+            <div class="posting-headline">
+              <h2>Senior Backend Engineer</h2>
+              <div class="posting-categories">
+                <div class="location">Remote, US</div>
+                <div class="department">Engineering – Platform</div>
+              </div>
+            </div>
+            <div class="postings-btn-wrapper"><a class="postings-btn template-btn-submit" href="/apply">Apply for this job</a></div>
+          </div>
+        </div>
+        <div class="section-wrapper page-full-width">
+          <div class="section page-centered" data-qa="job-description">
+            <div>Northstar Freight moves 2 million pallets a year. Our platform team builds the event-driven backbone that tracks every shipment in real time.</div>
+            <div><br /></div>
+            <div>You will design and operate Go services on Kubernetes, own our Kafka pipelines, and help the team level up on observability.</div>
+          </div>
+          <div class="section page-centered">
+            <h3>What you'll do</h3>
+            <ul class="posting-requirements plain-list">
+              <li>Design and build distributed systems in Go that process millions of events per day</li>
+              <li>Own Kafka-based streaming pipelines end to end</li>
+              <li>Improve reliability with OpenTelemetry tracing and SLOs</li>
+              <li>Mentor engineers and lead design reviews</li>
+            </ul>
+          </div>
+          <div class="section page-centered">
+            <h3>What you bring</h3>
+            <ul class="posting-requirements plain-list">
+              <li>6+ years of backend engineering experience</li>
+              <li>Strong Golang and Kubernetes (EKS or GKE) experience</li>
+              <li>Experience with Kafka or similar event streaming</li>
+              <li>Nice to have: Terraform, gRPC, PostgreSQL</li>
+            </ul>
+          </div>
+          <div class="section page-centered" data-qa="closing-description">We offer competitive pay, equity, and a remote-first culture.</div>
+        </div>
+        <div class="section-wrapper page-full-width">
+          <form class="application-form" method="POST" enctype="multipart/form-data">
+            <div class="section application-form page-centered">
+              <h4>Submit your application</h4>
+              <ul>
+                <li class="application-question resume">
+                  <label for="resume-upload-input"><div class="application-label">Resume/CV<span class="required">✱</span></div></label>
+                  <div class="application-field file-input">
+                    <a class="postings-btn template-btn-utility visible-resume-upload">
+                      <span class="default-label">ATTACH RESUME/CV</span>
+                      <span class="filename"></span>
+                      <input type="file" id="resume-upload-input" name="resume" class="application-file-input" />
+                    </a>
+                  </div>
+                </li>
+                <li class="application-question">
+                  <label><div class="application-label">Full name</div><div class="application-field"><input type="text" name="name" /></div></label>
+                </li>
+              </ul>
+              <button type="button" class="postings-btn template-btn-submit" id="btn-submit">Submit application</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="result">waiting for a file…</div>
+    <script>
+      document.getElementById('resume-upload-input').addEventListener('change', async (e) => {
+        const f = e.target.files[0];
+        const head = await f.slice(0, 5).text();
+        document.querySelector('.filename').textContent = f.name;
+        const r = document.getElementById('result');
+        r.textContent = `lever got ${f.name} (${f.size} bytes) header=${head}`;
+        r.dataset.ok = String(head === '%PDF-');
+      });
+      document.getElementById('btn-submit').addEventListener('click', () => (document.body.dataset.submitted = 'true'));
+    </script>
+  </body>
+</html>

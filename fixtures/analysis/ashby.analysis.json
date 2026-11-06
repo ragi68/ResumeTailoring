@@ -1,0 +1,9 @@
+{
+  "title": "Product Engineer, Growth",
+  "company": "Quillmate",
+  "seniority": "mid",
+  "domain": "B2B documentation SaaS",
+  "requiredSkills": ["React", "TypeScript", "Node.js", "SQL", "PostgreSQL", "REST APIs"],
+  "niceToHaves": ["Playwright", "Next.js", "LLM features"],
+  "keywords": ["A/B experiments", "onboarding", "full-stack", "growth"]
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- Synthetic fixture modeled on Ashby (jobs.ashbyhq.com/<company>/<id>/application): JSON-LD JobPosting,
+     a description pane, and a React-style upload zone wrapping a hidden resume input. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Product Engineer, Growth @ Quillmate</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "JobPosting",
+        "title": "Product Engineer, Growth",
+        "hiringOrganization": { "@type": "Organization", "name": "Quillmate" },
+        "description": "<p>Quillmate helps 50,000 teams write better docs. We're hiring a <strong>Product Engineer</strong> to own growth experiments end to end.</p><h3>You will</h3><ul><li>Ship full-stack features in React, TypeScript and Node.js</li><li>Design A/B experiments and analyze results with SQL</li><li>Work closely with design and product on onboarding</li></ul><h3>You have</h3><ul><li>4+ years building web products with React and TypeScript</li><li>Experience with PostgreSQL and REST APIs</li><li>Nice to have: Playwright, Next.js, LLM features</li></ul>",
+        "employmentType": "FULLTIME"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="ashby-job-posting-left-pane">
+      <h1 class="ashby-job-posting-heading">Product Engineer, Growth</h1>
+    </div>
+    <div class="ashby-job-posting-right-pane">
+      <div class="_descriptionText_4fqrp_201">
+        <p>Quillmate helps 50,000 teams write better docs.</p>
+        <p>Ship full-stack features in React, TypeScript and Node.js.</p>
+      </div>
+      <form class="ashby-application-form-container">
+        <div class="ashby-application-form-field-entry _fieldEntry_17bzj_29">
+          <label class="ashby-application-form-question-title" for="_systemfield_resume">Resume</label>
+          <div class="_fileUpload_1r9fe_1" id="resume-zone">
+            <p>Upload File or drag and drop here</p>
+            <button type="button" class="_button_1r9fe_6">Upload File</button>
+            <input type="file" id="_systemfield_resume" name="_systemfield_resume" style="display: none" accept=".pdf,.doc,.docx,.odt,.rtf" />
+          </div>
+          <div id="resume-name"></div>
+        </div>
+        <div class="ashby-application-form-field-entry">
+          <label class="ashby-application-form-question-title" for="cover">Cover letter</label>
+          <input type="file" id="cover" name="cover" style="display: none" />
+        </div>
+      </form>
+    </div>
+    <div id="result">waiting for a file…</div>
+    <script>
+      // Emulates a React-controlled upload zone: state only updates via the change event or a drop.
+      async function accept(file, via) {
+        const head = await file.slice(0, 5).text();
+        document.getElementById('resume-name').textContent = file.name;
+        const r = document.getElementById('result');
+        r.textContent = `ashby got ${file.name} via ${via} (${file.size} bytes) header=${head}`;
+        r.dataset.ok = String(head === '%PDF-');
+      }
+      document.getElementById('_systemfield_resume').addEventListener('change', (e) => accept(e.target.files[0], 'input'));
+      const zone = document.getElementById('resume-zone');
+      zone.addEventListener('dragover', (e) => e.preventDefault());
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        accept(e.dataTransfer.files[0], 'drop');
+      });
+    </script>
+  </body>
+</html>

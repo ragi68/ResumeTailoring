@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- Synthetic fixture modeled on Workday (<tenant>.wd5.myworkdayjobs.com/...): data-automation-id hooks;
+     the "My Experience" step with the resume drop zone renders ~1.5 s after load, like the SPA's step change. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Site Reliability Engineer III</title>
+    <meta property="og:site_name" content="Cobalt Energy" />
+  </head>
+  <body>
+    <div data-automation-id="jobPostingPage">
+      <h2 data-automation-id="jobPostingHeader">Site Reliability Engineer III</h2>
+      <div data-automation-id="locations">Denver, CO</div>
+      <div data-automation-id="jobPostingDescription">
+        <p><b>Job Description</b></p>
+        <p>Cobalt Energy operates smart-grid software for 3 million homes. Our SRE team keeps it fast and available.</p>
+        <p><b>Responsibilities</b></p>
+        <ul>
+          <li>Run Kubernetes clusters on AWS and automate everything with Terraform</li>
+          <li>Build observability with Prometheus, Grafana and OpenTelemetry</li>
+          <li>Lead incident response and blameless postmortems</li>
+          <li>Write tooling in Go or Python</li>
+        </ul>
+        <p><b>Required Qualifications</b></p>
+        <ul>
+          <li>5+ years in SRE or DevOps</li>
+          <li>Kubernetes, AWS, Terraform, CI/CD</li>
+          <li>On-call experience</li>
+        </ul>
+      </div>
+    </div>
+    <div id="app-step"></div>
+    <div id="result">waiting for a file…</div>
+    <script>
+      setTimeout(() => {
+        document.getElementById('app-step').innerHTML = `
+          <h3 data-automation-id="pageHeader">My Experience</h3>
+          <div data-automation-id="resumeAttachments">
+            <label>Resume/CV</label>
+            <div data-automation-id="file-upload-drop-zone" style="border:2px dashed #999;padding:24px">
+              <p>Drop file here</p>
+              <button type="button" data-automation-id="select-files">Select files</button>
+              <input type="file" data-automation-id="file-upload-input-ref" style="display:none" />
+            </div>
+            <div data-automation-id="file-upload-successful"></div>
+          </div>`;
+        document.querySelector('[data-automation-id="file-upload-input-ref"]').addEventListener('change', async (e) => {
+          const f = e.target.files[0];
+          const head = await f.slice(0, 5).text();
+          document.querySelector('[data-automation-id="file-upload-successful"]').textContent = f.name;
+          const r = document.getElementById('result');
+          r.textContent = `workday got ${f.name} (${f.size} bytes) header=${head}`;
+          r.dataset.ok = String(head === '%PDF-');
+        });
+      }, 1500);
+    </script>
+  </body>
+</html>

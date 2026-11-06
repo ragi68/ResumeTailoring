@@ -1,0 +1,12 @@
+{
+  "summaryId": "Backend / platform",
+  "blocks": [
+    { "refId": "exp_northwind", "bulletIds": ["b_nw_2", "b_nw_1", "b_nw_3", "b_nw_5", "b_nw_4", "b_lh_2", "b_fake_99"] },
+    { "refId": "Lumen Health", "bulletIds": ["b_lh_1", "b_lh_3"] },
+    { "refId": "exp_imaginary", "bulletIds": ["b_bp_2"] },
+    { "refId": "proj_tracekit", "bulletIds": ["b_tk_1", "b_tk_2"] },
+    { "refId": "edu_osu", "bulletIds": [] }
+  ],
+  "skillIds": ["sk_go", "Kubernetes", "sk_kafka", "golang", "sk_grpc", "Rust", "sk_terraform", "sk_postgres", "sk_otel"],
+  "rationale": "Prioritized Go, Kubernetes and Kafka work at Northwind; kept Lumen for backend breadth; tracekit shows observability depth."
+}

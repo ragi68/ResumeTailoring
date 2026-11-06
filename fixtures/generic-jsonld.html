@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- Synthetic fixture: a company careers page with a JSON-LD JobPosting (in an @graph) and a plain form. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Careers | Brightline Labs</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          { "@type": "WebSite", "name": "Brightline Labs" },
+          {
+            "@type": "JobPosting",
+            "title": "Machine Learning Engineer",
+            "hiringOrganization": { "@type": "Organization", "name": "Brightline Labs" },
+            "description": "&lt;p&gt;Brightline Labs builds forecasting tools for transit agencies.&lt;/p&gt;<p>We are hiring an <b>ML Engineer</b> to train and deploy models that predict delays across 40 cities.</p><ul><li>Python, scikit-learn, and PyTorch</li><li>Deploy models behind FastAPI on AWS</li><li>Build evaluation pipelines and monitor drift</li></ul><p>Nice to have: Airflow, Kubernetes, experience with LLM evaluation.</p>"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">{ not valid json </script>
+  </head>
+  <body>
+    <h1>Machine Learning Engineer</h1>
+    <form>
+      <label for="cv">Upload your CV</label>
+      <input id="cv" name="cv" type="file" />
+    </form>
+  </body>
+</html>

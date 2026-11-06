@@ -1,0 +1,10 @@
+{
+  "suggestions": [
+    { "bulletId": "b_nw_3", "text": "Built a Golang gRPC pricing service that reduced quote latency p99 from 900 ms to 120 ms.", "reason": "Uses the posting's term Golang." },
+    { "bulletId": "b_nw_2", "text": "Designed an event-driven shipment tracking pipeline on Kafka processing 30M events per day with exactly-once semantics, used by 40 teams.", "reason": "Adds scale." },
+    { "bulletId": "b_nw_5", "text": "Introduced OpenTelemetry tracing and SLO dashboards in Grafana on Kubernetes, reducing mean time to resolution by 40%.", "reason": "Mentions Kubernetes." },
+    { "bulletId": "b_nw_4", "text": "Mentored 5 engineers and ran the backend interview loop, hiring 7 engineers over two years.", "reason": "No change." },
+    { "bulletId": "b_unknown", "text": "Something", "reason": "Unknown id." },
+    { "bulletId": "b_nw_1", "text": "Led the migration of 14 services from VMs to Kubernetes (EKS), cutting deploy time from 45 to 6 minutes for distributed systems teams.", "reason": "Adds the JD phrase distributed systems." }
+  ]
+}

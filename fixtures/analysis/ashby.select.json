@@ -1,0 +1,11 @@
+{
+  "summaryId": "sum_fullstack",
+  "blocks": [
+    { "refId": "exp_northwind", "bulletIds": ["b_nw_6", "b_nw_3", "b_nw_4"] },
+    { "refId": "exp_lumen", "bulletIds": ["b_lh_1", "b_lh_3", "b_lh_2", "b_lh_5"] },
+    { "refId": "exp_brightpath", "bulletIds": ["b_bp_1"] },
+    { "refId": "proj_mealplan", "bulletIds": ["b_mp_1", "b_mp_2"] }
+  ],
+  "skillIds": ["sk_ts", "sk_react", "sk_node", "sk_postgres", "sk_sql", "sk_playwright", "sk_js", "sk_python"],
+  "rationale": "Led with customer-facing product work and React/TypeScript at Lumen; the meal planner covers Next.js and LLM features."
+}

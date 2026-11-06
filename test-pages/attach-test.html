@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Attach test page</title>
+    <style>
+      body { font: 15px/1.4 system-ui, sans-serif; max-width: 720px; margin: 24px auto; padding: 0 16px; }
+      section { border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin: 16px 0; }
+      .dropzone { border: 2px dashed #888; border-radius: 8px; padding: 32px; text-align: center; }
+      .dropzone.over { background: #eef; }
+      #result { font-family: ui-monospace, monospace; background: #f4f4f4; padding: 8px; white-space: pre-wrap; }
+      nav a { margin-right: 12px; }
+    </style>
+  </head>
+  <body>
+    <h1>Resume Tailor attach test</h1>
+    <nav>
+      <a href="?case=plain">Plain input</a>
+      <a href="?case=hidden">Hidden input + button</a>
+      <a href="?case=dropzone">Drop zone only</a>
+      <a href="?case=iframe">Plain input in iframe</a>
+    </nav>
+    <p>Open the side panel and click <b>Attach test PDF to current page</b>. The result box should show the PDF.</p>
+
+    <section id="case-plain" hidden>
+      <h2>Plain file inputs</h2>
+      <p><label for="cover">Cover letter</label> <input type="file" id="cover" name="cover_letter" accept=".pdf" /></p>
+      <p><label for="resume">Resume/CV</label> <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" /></p>
+    </section>
+
+    <section id="case-hidden" hidden>
+      <h2>Hidden input behind a custom button</h2>
+      <button type="button" id="attach-btn">Attach résumé</button>
+      <input type="file" id="hidden-resume" name="resume" style="display: none" />
+      <span id="hidden-filename">No file chosen</span>
+    </section>
+
+    <section id="case-dropzone" hidden>
+      <h2>Drop zone (no file input in the DOM)</h2>
+      <div class="dropzone" id="dropzone">Drag &amp; drop your resume here</div>
+    </section>
+
+    <section id="case-iframe" hidden>
+      <h2>Upload form inside an iframe</h2>
+      <iframe id="child" src="attach-test.html?case=plain&amp;child=1" width="100%" height="320"></iframe>
+    </section>
+
+    <h3>Result</h3>
+    <div id="result">waiting for a file…</div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const kase = params.get('case') || 'plain';
+      // Keep only the active scenario in the DOM so each case is tested in isolation.
+      for (const s of document.querySelectorAll('section[id^="case-"]')) {
+        if (s.id === 'case-' + kase) s.hidden = false;
+        else s.remove();
+      }
+      const result = document.getElementById('result');
+      const on = (id, type, fn) => document.getElementById(id)?.addEventListener(type, fn);
+
+      async function report(file, via) {
+        if (!file) return;
+        const head = await file.slice(0, 5).text();
+        const text = `received via ${via}: ${file.name} (${file.size} bytes, ${file.type}) header=${head}`;
+        result.textContent = text;
+        result.dataset.ok = head === '%PDF-' ? 'true' : 'false';
+        if (window.parent !== window) window.parent.postMessage({ attachTest: text, ok: result.dataset.ok }, '*');
+      }
+
+      for (const id of ['resume', 'cover', 'hidden-resume']) {
+        on(id, 'change', (e) => {
+          report(e.target.files[0], `change on #${id}`);
+          if (id === 'hidden-resume') document.getElementById('hidden-filename').textContent = e.target.files[0]?.name ?? '';
+        });
+      }
+      on('attach-btn', 'click', () => document.getElementById('hidden-resume').click());
+
+      const dz = document.getElementById('dropzone');
+      on('dropzone', 'dragover', (e) => { e.preventDefault(); dz.classList.add('over'); });
+      on('dropzone', 'dragleave', () => dz.classList.remove('over'));
+      on('dropzone', 'drop', (e) => {
+        e.preventDefault();
+        dz.classList.remove('over');
+        report(e.dataTransfer.files[0], 'drop on #dropzone');
+      });
+
+      window.addEventListener('message', (e) => {
+        if (e.data && e.data.attachTest) {
+          result.textContent = 'from iframe: ' + e.data.attachTest;
+          result.dataset.ok = e.data.ok;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- Synthetic fixture modeled on Greenhouse's new job boards (job-boards.greenhouse.io/<company>/jobs/<id>):
+     description in .job__description and a hidden #resume file input behind an "Attach" button. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Job Application for Staff Data Engineer at Larkspur Health</title>
+    <meta property="og:site_name" content="Larkspur Health" />
+  </head>
+  <body>
+    <div class="job-post">
+      <div class="job__header">
+        <div class="job__title">
+          <h1 class="section-header section-header--large">Staff Data Engineer</h1>
+          <div class="job__location">New York, NY (Hybrid)</div>
+        </div>
+      </div>
+      <div class="job__description body">
+        <p><strong>About Larkspur Health</strong></p>
+        <p>Larkspur builds care coordination software used by 400 hospitals. Our data platform powers clinical analytics and ML.</p>
+        <p><strong>Responsibilities</strong></p>
+        <ul>
+          <li>Build and own batch and streaming data pipelines in Python and SQL</li>
+          <li>Orchestrate workflows with Airflow and dbt</li>
+          <li>Partner with ML engineers to productionize models</li>
+          <li>Ensure HIPAA-compliant handling of PHI</li>
+        </ul>
+        <p><strong>Qualifications</strong></p>
+        <ul>
+          <li>8+ years in data engineering</li>
+          <li>Expert Python and SQL; experience with Spark or Snowflake</li>
+          <li>Experience with AWS and Terraform</li>
+          <li>Bonus: scikit-learn, feature stores</li>
+        </ul>
+      </div>
+    </div>
+    <form id="application-form" class="application--form">
+      <div class="file-upload" role="group" aria-labelledby="upload-label-resume">
+        <div class="upload-label" id="upload-label-resume">Resume/CV<span class="required">*</span></div>
+        <div class="file-upload__wrapper">
+          <div class="button-container">
+            <button type="button" class="btn btn--pill" id="attach-resume">Attach</button>
+            <button type="button" class="btn btn--pill">Dropbox</button>
+            <button type="button" class="btn btn--pill">Enter manually</button>
+          </div>
+          <input id="resume" class="visually-hidden" type="file" accept=".pdf,.doc,.docx,.txt,.rtf" style="display: none" />
+        </div>
+        <p class="file-upload__filename"></p>
+      </div>
+      <div class="file-upload" role="group" aria-labelledby="upload-label-cover_letter">
+        <div class="upload-label" id="upload-label-cover_letter">Cover Letter</div>
+        <button type="button" class="btn btn--pill">Attach</button>
+        <input id="cover_letter" class="visually-hidden" type="file" accept=".pdf,.doc,.docx,.txt,.rtf" style="display: none" />
+      </div>
+      <button type="button" id="submit_app">Submit application</button>
+    </form>
+    <div id="result">waiting for a file…</div>
+    <script>
+      document.getElementById('attach-resume').addEventListener('click', () => document.getElementById('resume').click());
+      document.getElementById('resume').addEventListener('change', async (e) => {
+        const f = e.target.files[0];
+        const head = await f.slice(0, 5).text();
+        document.querySelector('.file-upload__filename').textContent = f.name;
+        const r = document.getElementById('result');
+        r.textContent = `greenhouse got ${f.name} (${f.size} bytes) header=${head}`;
+        r.dataset.ok = String(head === '%PDF-');
+      });
+      document.getElementById('cover_letter').addEventListener('change', () => {
+        document.getElementById('result').textContent = 'WRONG: cover letter input received the resume';
+        document.getElementById('result').dataset.ok = 'false';
+      });
+    </script>
+  </body>
+</html>

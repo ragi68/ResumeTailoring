@@ -1,0 +1,9 @@
+{
+  "title": "Senior Backend Engineer",
+  "company": "Northstar Freight",
+  "seniority": "senior",
+  "domain": "logistics / freight tracking",
+  "requiredSkills": ["Golang", "Kubernetes", "Kafka", "distributed systems", "backend engineering"],
+  "niceToHaves": ["Terraform", "gRPC", "PostgreSQL"],
+  "keywords": ["event-driven", "OpenTelemetry", "SLOs", "mentoring", "design reviews", "Rust"]
+}
